@@ -32,7 +32,7 @@ public class UltimateGoal extends LinearOpMode {
     private DcMotor intake;
     private DcMotorEx shuter;
     private DcMotorEx arm;
-    private DcMotor grip;
+    private DcMotorEx grip;
     private Servo loader;
     private Servo grabber_left;
     private Servo grabber_right;
@@ -548,7 +548,7 @@ public class UltimateGoal extends LinearOpMode {
                     VelVar = VelVar + 5;
                     shuter.setVelocity(VelVar);
                 }
-                
+
                 if(gamepad1.right_stick_y > 0)
                 {
                     VelVar = VelVar - 5;

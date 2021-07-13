@@ -21,6 +21,9 @@ public class TeleOp_bun extends OpMode {
     private DcMotorEx motords;
     private DcMotorEx motorss;
     private DcMotorEx intake;
+    private DcMotorEx arm;
+    private DcMotorEx shuter;
+    private DcMotorEx grip;
     /**variable for changing the movement speed of the robot*/
     private int v = 2;
     /**variables for calculating the power for motors*/
@@ -29,6 +32,9 @@ public class TeleOp_bun extends OpMode {
     private double ds;
     private double ss;
     private double max;
+    private double once=1;
+    double VelVar = 2150;
+    double poz=0, gpoz=0;
     double timeLimit = 0.3;
     /**variables for holding the gamepad joystick values;
      * we don't want to access them too many times in a loop */
@@ -44,7 +50,6 @@ public class TeleOp_bun extends OpMode {
     private long sysTimeC;
     public ElapsedTime timer = new ElapsedTime();
 
-
     private Thread Chassis = new Thread( new Runnable() {
         @Override
         public void run() {
@@ -53,7 +58,8 @@ public class TeleOp_bun extends OpMode {
                 /**change the variable that controls the speed of the chassis using the bumpers*/
                 if (gamepad1.right_bumper) {
                     v = 1;
-                } else if (gamepad1.left_bumper) {
+                }
+                else{
                     v = 2;
                 }
                 /**getting the gamepad joystick values*/
@@ -105,6 +111,10 @@ public class TeleOp_bun extends OpMode {
         @Override
         public void run() {
             while(!stop){
+                if(once==1){
+                    intake.setPower(1);
+                    once=0;
+                }
                 boolean abut = gamepad1.a;
                 if (alast != abut) {
                     if (gamepad1.a) {
@@ -135,16 +145,6 @@ public class TeleOp_bun extends OpMode {
                 }
                 if(gamepad1.b && (loaderState == -1))
                 {
-                    /*
-                    ready = false;
-            while(!ready && opModeIsActive())
-            {
-                if(Math.abs(shuter.getVelocity() - 2100) < 5)
-                {
-                    ready = true;
-                }
-            }
-              */
                     loader.setPosition(0.6);
                     loaderState = 1;
                     timeLimit = 0.27;
@@ -168,6 +168,65 @@ public class TeleOp_bun extends OpMode {
                     if (timer.time() > timeLimit)
                         loaderState = -1;
                 }
+                if(gamepad1.dpad_left)
+                {
+                    while(gamepad1.dpad_left)
+                    {
+                        gpoz++;
+                        grip.setPower(gpoz);
+                    }
+                }
+                grip.setPower(0);
+                gpoz = 0;
+
+
+                //GRIP-INCHIS
+                if(gamepad1.dpad_right)
+                {
+                    while(gamepad1.dpad_right)
+                    {
+                        gpoz--;
+                        grip.setPower(gpoz);
+                    }
+                }
+                grip.setPower(0);
+                gpoz = 0;
+                if(gamepad1.dpad_up)
+                {
+                    while(gamepad1.dpad_up)
+                    {
+                        poz--;
+                        arm.setPower(poz);
+                    }
+                }
+                arm.setPower(0);
+                poz=0;
+                if(gamepad1.dpad_down)
+                {
+                    while(gamepad1.dpad_down)
+                    {
+                        poz++;
+                        arm.setPower(poz);
+                    }
+                }
+                arm.setPower(0);
+                poz=0;
+                if(gamepad1.y)
+                {
+                    VelVar = 2155;
+                    shuter.setVelocity(2165); //2280 AUTONOM
+                }
+
+                //SHOOTER-POWER-SHOT
+                if(gamepad1.x)
+                {
+                    VelVar = 1970;
+                    shuter.setVelocity(1973);//1950
+                }
+                if(gamepad1.back)
+                {
+                    loader.setPosition(0.65);
+                }
             }
         }
     });
@@ -179,35 +238,41 @@ public class TeleOp_bun extends OpMode {
         motorsf = hardwareMap.get(DcMotorEx.class, "motorFL");
         motorss = hardwareMap.get(DcMotorEx.class, "motorBL");
         intake = hardwareMap.get(DcMotorEx.class, "intake");
+        arm = hardwareMap.get(DcMotorEx.class, "arm");
+        grip = hardwareMap.get(DcMotorEx.class, "grip");
+        shuter = hardwareMap.get(DcMotorEx.class, "shuter");
         grabber_left  = hardwareMap.servo.get("grabber_left");
         grabber_right  = hardwareMap.servo.get("grabber_right");
         loader  = hardwareMap.servo.get("loader");
+
         motords.setDirection(DcMotorSimple.Direction.REVERSE);
         motorss.setDirection(DcMotorSimple.Direction.REVERSE);
-
+        shuter.setDirection(DcMotorSimple.Direction.REVERSE);
         /**set the mode of the  motors */
 
         motordf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motords.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorsf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorss.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         motordf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motords.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorsf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorss.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        grip.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         /**initialization system current time milliseconds */
         sysTimeC = System.currentTimeMillis();
 
         /**start the thread*/
+    }
+    @Override
+    public void start() {
         Chassis.start();
         Systems.start();
-        intake.setPower(1);
-    }
-
+    };
     /**using the loop function to send the telemetry to the phone*/
     @Override
     public void loop() {

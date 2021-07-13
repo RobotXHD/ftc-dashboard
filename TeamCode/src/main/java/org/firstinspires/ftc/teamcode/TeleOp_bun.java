@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -33,6 +36,7 @@ public class TeleOp_bun extends OpMode {
     private double ss;
     private double max;
     private double once=1;
+    private double cn=0;
     double VelVar = 2150;
     double poz=0, gpoz=0;
     double timeLimit = 0.3;
@@ -40,8 +44,8 @@ public class TeleOp_bun extends OpMode {
      * we don't want to access them too many times in a loop */
     private double forward, right, clockwise;
     /**variable that stops the threads when programs stop*/
-    private boolean stop, alast = false;
-    private int apoz = 0;
+    private boolean stop, alast = false,cnlast=false;
+    private int apoz = 0,cnpoz=0;
     int loaderState = -1;
     /**variables that count the thread's fps*/
     private long fpsC=0;
@@ -111,6 +115,7 @@ public class TeleOp_bun extends OpMode {
         @Override
         public void run() {
             while(!stop){
+                shuter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(constants.p, constants.i, constants.d, constants.f));
                 if(once==1){
                     intake.setPower(1);
                     once=0;
@@ -211,10 +216,17 @@ public class TeleOp_bun extends OpMode {
                 }
                 arm.setPower(0);
                 poz=0;
-                if(gamepad1.y)
-                {
-                    VelVar = 2155;
-                    shuter.setVelocity(2165); //2280 AUTONOM
+                boolean cnbut = gamepad1.y;
+                if (cnlast != cnbut) {
+                    if (gamepad1.y) {
+                        if (cnpoz == 0) shuter.setVelocity(2155);
+                        else if(cnpoz == 1) shuter.setVelocity(0);
+                        cnpoz++;
+                        if(cnpoz == 2){
+                            cnpoz = 0;
+                        }
+                    }
+                    cnlast = cnbut;
                 }
 
                 //SHOOTER-POWER-SHOT
@@ -232,6 +244,7 @@ public class TeleOp_bun extends OpMode {
     });
     @Override
     public void init() {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         /**initialization motors */
         motordf = hardwareMap.get(DcMotorEx.class, "motorFR");
         motords = hardwareMap.get(DcMotorEx.class, "motorBR");
@@ -254,6 +267,7 @@ public class TeleOp_bun extends OpMode {
         motords.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorsf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorss.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shuter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         motordf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motords.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -266,6 +280,11 @@ public class TeleOp_bun extends OpMode {
         /**initialization system current time milliseconds */
         sysTimeC = System.currentTimeMillis();
 
+        constants.p =  shuter.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER).p;
+        constants.i =  shuter.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER).i;
+        constants.d =  shuter.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER).d;
+        constants.f =  shuter.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER).f;
+
         /**start the thread*/
     }
     @Override
@@ -276,11 +295,12 @@ public class TeleOp_bun extends OpMode {
     /**using the loop function to send the telemetry to the phone*/
     @Override
     public void loop() {
-        telemetry.addData("motordf: ", motordf.getCurrentPosition());
-        telemetry.addData("motorsf: ", motorsf.getCurrentPosition());
-        telemetry.addData("motords: ", motords.getCurrentPosition());
-        telemetry.addData("motorss: ", motorss.getCurrentPosition());
-        telemetry.addData("Th Chassis: ", fpsCLast);
+        //telemetry.addData("motordf: ", motordf.getCurrentPosition());
+        //telemetry.addData("motorsf: ", motorsf.getCurrentPosition());
+        //telemetry.addData("motords: ", motords.getCurrentPosition());
+        //telemetry.addData("motorss: ", motorss.getCurrentPosition());
+        //telemetry.addData("Th Chassis: ", fpsCLast);
+        telemetry.addData("Launch:", shuter.getVelocity());
         telemetry.update();
     }
 

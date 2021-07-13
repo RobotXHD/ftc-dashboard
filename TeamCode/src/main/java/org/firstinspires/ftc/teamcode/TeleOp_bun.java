@@ -115,7 +115,6 @@ public class TeleOp_bun extends OpMode {
         @Override
         public void run() {
             while(!stop){
-                shuter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(constants.p, constants.i, constants.d, constants.f));
                 if(once==1){
                     intake.setPower(1);
                     once=0;
@@ -279,12 +278,7 @@ public class TeleOp_bun extends OpMode {
 
         /**initialization system current time milliseconds */
         sysTimeC = System.currentTimeMillis();
-
-        constants.p =  shuter.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER).p;
-        constants.i =  shuter.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER).i;
-        constants.d =  shuter.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER).d;
-        constants.f =  shuter.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER).f;
-
+        shuter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(constants.p, constants.i, constants.d, constants.f));
         /**start the thread*/
     }
     @Override

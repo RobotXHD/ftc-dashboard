@@ -3,5 +3,5 @@ import com.acmerobotics.dashboard.config.Config;
 
 @Config
 public class constants {
-    public static double p = 0.0, i = 0.0, d = 0.0, f = 0.0;
+    public static double p = 20.0, i = 0.8, d = 5.0, f = 0.0;
 }

@@ -17,7 +17,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.SensorREV2mDistanc
 
 import static java.lang.Math.abs;
 @TeleOp
-public class TeleOp_bun extends OpMode {
+public class TeleOpMaiBun extends OpMode {
     private Servo grabber_left;
     private Servo grabber_right;
     private Servo loader;
@@ -119,7 +119,7 @@ public class TeleOp_bun extends OpMode {
         @Override
         public void run() {
             while(!stop){
-                shuter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(constants.p, constants.i, constants.d, constants.f));
+                //shuter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(constants.p, constants.i, constants.d, constants.f));
                 if(once==1){
                     intake.setPower(1);
                     once=0;
@@ -138,6 +138,7 @@ public class TeleOp_bun extends OpMode {
                     }
                     alast = abut;
                 }
+                /*
                 if(gamepad1.left_trigger > 0.2)
                 {
                     grabber_left.setPosition(1 - gamepad1.left_trigger);
@@ -243,6 +244,7 @@ public class TeleOp_bun extends OpMode {
                 {
                     loader.setPosition(0.65);
                 }
+                */
             }
         }
     });
@@ -255,36 +257,36 @@ public class TeleOp_bun extends OpMode {
         motorsf = hardwareMap.get(DcMotorEx.class, "motorFL");
         motorss = hardwareMap.get(DcMotorEx.class, "motorBL");
         intake = hardwareMap.get(DcMotorEx.class, "intake");
-        arm = hardwareMap.get(DcMotorEx.class, "arm");
+        /*arm = hardwareMap.get(DcMotorEx.class, "arm");
         grip = hardwareMap.get(DcMotorEx.class, "grip");
         shuter = hardwareMap.get(DcMotorEx.class, "shuter");
         grabber_left  = hardwareMap.servo.get("grabber_left");
         grabber_right  = hardwareMap.servo.get("grabber_right");
         loader  = hardwareMap.servo.get("loader");
-        rangeSensor = hardwareMap.get(Rev2mDistanceSensor.class, "laser");
+        rangeSensor = hardwareMap.get(Rev2mDistanceSensor.class, "laser");*/
 
         motords.setDirection(DcMotorSimple.Direction.REVERSE);
         motorss.setDirection(DcMotorSimple.Direction.REVERSE);
-        shuter.setDirection(DcMotorSimple.Direction.REVERSE);
+        //shuter.setDirection(DcMotorSimple.Direction.REVERSE);
         /**set the mode of the  motors */
 
         motordf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motords.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorsf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorss.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        shuter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //shuter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         motordf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motords.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorsf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorss.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        grip.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //grip.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         /**initialization system current time milliseconds */
         sysTimeC = System.currentTimeMillis();
-        shuter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(constants.p, constants.i, constants.d, constants.f));
+        //shuter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(constants.p, constants.i, constants.d, constants.f));
         /**start the thread*/
     }
     @Override
@@ -295,12 +297,12 @@ public class TeleOp_bun extends OpMode {
     /**using the loop function to send the telemetry to the phone*/
     @Override
     public void loop() {
-        //telemetry.addData("motordf: ", motordf.getCurrentPosition());
-        //telemetry.addData("motorsf: ", motorsf.getCurrentPosition());
-        //telemetry.addData("motords: ", motords.getCurrentPosition());
-        //telemetry.addData("motorss: ", motorss.getCurrentPosition());
+        telemetry.addData("motordf: ", motordf.getCurrentPosition());
+        telemetry.addData("motorsf: ", motorsf.getCurrentPosition());
+        telemetry.addData("motords: ", motords.getCurrentPosition());
+        telemetry.addData("motorss: ", motorss.getCurrentPosition());
         //telemetry.addData("Th Chassis: ", fpsCLast);
-        telemetry.addData("Launch:", shuter.getVelocity());
+        //telemetry.addData("Launch:", shuter.getVelocity());
         telemetry.update();
     }
 

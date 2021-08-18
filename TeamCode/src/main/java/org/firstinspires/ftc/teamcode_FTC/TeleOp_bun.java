@@ -1,8 +1,9 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode_FTC;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -13,14 +14,14 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.SensorREV2mDistance;
-
 import static java.lang.Math.abs;
 @TeleOp
-public class TeleOpMaiBun extends OpMode {
+public class TeleOp_bun extends OpMode {
     private Servo grabber_left;
     private Servo grabber_right;
     private Servo loader;
+    private Servo stopper_left;
+    private Servo stopper_right;
     /**declare the motors*/
     private DcMotorEx motordf;
     private DcMotorEx motorsf;
@@ -30,6 +31,7 @@ public class TeleOpMaiBun extends OpMode {
     private DcMotorEx arm;
     private DcMotorEx shuter;
     private DcMotorEx grip;
+    private BNO055IMU imu;
     /**variable for changing the movement speed of the robot*/
     private int v = 2;
     /**variables for calculating the power for motors*/
@@ -40,6 +42,7 @@ public class TeleOpMaiBun extends OpMode {
     private double max;
     private double once=1;
     private double cn=0;
+    double correction;
     double VelVar = 2150;
     double poz=0, gpoz=0;
     double timeLimit = 0.3;
@@ -56,7 +59,8 @@ public class TeleOpMaiBun extends OpMode {
     /** variable that  holds the system current time milliseconds*/
     private long sysTimeC;
     public ElapsedTime timer = new ElapsedTime();
-    public Rev2mDistanceSensor rangeSensor;
+    public boolean rotating = false;
+
 
     private Thread Chassis = new Thread( new Runnable() {
         @Override
@@ -75,12 +79,22 @@ public class TeleOpMaiBun extends OpMode {
                 right = gamepad1.left_stick_x;
                 clockwise = -gamepad1.right_stick_x;
 
+                if(clockwise != 0.0){
+                    correction = 0.0;
+                    rotating = true;
+                }
+                else{
+                    if(rotating){
+
+                    }
+                }
+
 
                 /**calculating the power for motors */
-                df = forward + clockwise - right;
-                ss = forward - clockwise - right;
-                sf = -forward + clockwise - right;
-                ds = -forward - clockwise - right;
+                df = forward + clockwise - right - correction;
+                ss = forward - clockwise - right + correction;
+                sf = -forward + clockwise - right - correction;
+                ds = -forward - clockwise - right + correction;
 
                 /**normalising the power values*/
                 max = abs(sf);
@@ -119,7 +133,7 @@ public class TeleOpMaiBun extends OpMode {
         @Override
         public void run() {
             while(!stop){
-                //shuter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(constants.p, constants.i, constants.d, constants.f));
+                shuter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(constants.p, constants.i, constants.d, constants.f));
                 if(once==1){
                     intake.setPower(1);
                     once=0;
@@ -138,7 +152,6 @@ public class TeleOpMaiBun extends OpMode {
                     }
                     alast = abut;
                 }
-                /*
                 if(gamepad1.left_trigger > 0.2)
                 {
                     grabber_left.setPosition(1 - gamepad1.left_trigger);
@@ -153,6 +166,9 @@ public class TeleOpMaiBun extends OpMode {
                 else {
                     grabber_right.setPosition(0.2);
                 }
+
+                //stopper_left.setPosition()
+
                 if(gamepad1.b && (loaderState == -1))
                 {
                     loader.setPosition(0.6);
@@ -244,7 +260,6 @@ public class TeleOpMaiBun extends OpMode {
                 {
                     loader.setPosition(0.65);
                 }
-                */
             }
         }
     });
@@ -257,36 +272,42 @@ public class TeleOpMaiBun extends OpMode {
         motorsf = hardwareMap.get(DcMotorEx.class, "motorFL");
         motorss = hardwareMap.get(DcMotorEx.class, "motorBL");
         intake = hardwareMap.get(DcMotorEx.class, "intake");
-        /*arm = hardwareMap.get(DcMotorEx.class, "arm");
+        arm = hardwareMap.get(DcMotorEx.class, "arm");
         grip = hardwareMap.get(DcMotorEx.class, "grip");
         shuter = hardwareMap.get(DcMotorEx.class, "shuter");
         grabber_left  = hardwareMap.servo.get("grabber_left");
         grabber_right  = hardwareMap.servo.get("grabber_right");
         loader  = hardwareMap.servo.get("loader");
-        rangeSensor = hardwareMap.get(Rev2mDistanceSensor.class, "laser");*/
+        stopper_left = hardwareMap.servo.get("stopper_left");
+        stopper_right = hardwareMap.servo.get("stopper_right");
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+
 
         motords.setDirection(DcMotorSimple.Direction.REVERSE);
         motorss.setDirection(DcMotorSimple.Direction.REVERSE);
-        //shuter.setDirection(DcMotorSimple.Direction.REVERSE);
+        shuter.setDirection(DcMotorSimple.Direction.REVERSE);
         /**set the mode of the  motors */
 
         motordf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motords.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorsf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorss.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //shuter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shuter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         motordf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motords.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorsf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorss.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //grip.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        grip.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         /**initialization system current time milliseconds */
         sysTimeC = System.currentTimeMillis();
-        //shuter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(constants.p, constants.i, constants.d, constants.f));
+        shuter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(constants.p, constants.i, constants.d, constants.f));
         /**start the thread*/
     }
     @Override
@@ -301,8 +322,10 @@ public class TeleOpMaiBun extends OpMode {
         telemetry.addData("motorsf: ", motorsf.getCurrentPosition());
         telemetry.addData("motords: ", motords.getCurrentPosition());
         telemetry.addData("motorss: ", motorss.getCurrentPosition());
-        //telemetry.addData("Th Chassis: ", fpsCLast);
-        //telemetry.addData("Launch:", shuter.getVelocity());
+        telemetry.addData("arm: ", arm.getCurrentPosition());
+        telemetry.addData("Th Chassis: ", fpsCLast);
+        telemetry.addData("Launch:", shuter.getVelocity());
+        telemetry.addData("stopper_left", stopper_left.getPosition());
         telemetry.update();
     }
 

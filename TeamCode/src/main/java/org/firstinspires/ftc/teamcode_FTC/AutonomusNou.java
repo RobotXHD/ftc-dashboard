@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode_FTC;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -49,6 +49,8 @@ public class AutonomusNou extends LinearOpMode {
     private static final float halfField = 72 * mmPerInch;
     private static final float quadField  = 36 * mmPerInch;
 
+    double lastTime;
+
     private OpenGLMatrix lastLocation = null;
     public VuforiaLocalizer vuforia = null;
     List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
@@ -64,7 +66,6 @@ public class AutonomusNou extends LinearOpMode {
         @Override
         public void run() {
             while (!isStopRequested() && opModeIsActive()) {
-
                 // check all the trackable targets to see which one (if any) is visible.
                 targetVisible = false;
                 for (VuforiaTrackable trackable : allTrackables) {
@@ -113,7 +114,7 @@ public class AutonomusNou extends LinearOpMode {
         grabber_left  = hardwareMap.servo.get("grabber_left");
         grabber_right  = hardwareMap.servo.get("grabber_right");
         loader  = hardwareMap.servo.get("loader");
-        webcamName = hardwareMap.get(WebcamName.class, "Webcam1");
+        webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
         motords.setDirection(DcMotorSimple.Direction.REVERSE);
         motorss.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -188,35 +189,83 @@ public class AutonomusNou extends LinearOpMode {
             ((VuforiaTrackableDefaultListener) trackable.getListener()).setCameraLocationOnRobot(parameters.cameraName, cameraLocationOnRobot);
         }
         targetsUltimateGoal.activate();
-        Vuforia.start();
         waitForStart();
-        Fata(1,1,1,1);
-        Spate(1,1,1,1);
-        Stanga(1,1,1,1);
-        Dreapta(1,1,1,1);
+        Vuforia.start();
+        WobbleGoal(0.5,-0.85,800);
     }
-    public void Fata(double ss,double ds,double fs,double fd){
-        motordf.setPower(fd);
-        motorfs.setPower(fs);
-        motords.setPower(ds);
-        motorss.setPower(ss);
+    public void Fata(double ss,double ds,double fs,double fd,int t, double lastTime){
+        lastTime = System.currentTimeMillis();
+        while(lastTime + t > System.currentTimeMillis()) {
+            motordf.setPower(fd);
+            motorfs.setPower(-fs);
+            motords.setPower(-ds);
+            motorss.setPower(ss);
+        }
     }
-    public void Spate(double ss,double ds,double fs,double fd){
-        motordf.setPower(-fd);
-        motorfs.setPower(-fs);
-        motords.setPower(-ds);
-        motorss.setPower(-ss);
+    public void Spate(double ss,double ds,double fs,double fd, int t, double lastTime){
+        lastTime = System.currentTimeMillis();
+        while(lastTime + t > System.currentTimeMillis()) {
+            motordf.setPower(-fd);
+            motorfs.setPower(fs);
+            motords.setPower(ds);
+            motorss.setPower(-ss);
+        }
     }
-    public void Stanga(double ss,double ds,double fs,double fd){
-        motordf.setPower(fd);
-        motorfs.setPower(-fs);
-        motords.setPower(ds);
-        motorss.setPower(-ss);
+    public void Stanga(double ss,double ds,double fs,double fd, int t, double lastTime){
+        lastTime = System.currentTimeMillis();
+        while(lastTime + t > System.currentTimeMillis()) {
+            motordf.setPower(fd);
+            motorfs.setPower(fs);
+            motords.setPower(ds);
+            motorss.setPower(ss);
+        }
     }
-    public void Dreapta(double ss,double ds,double fs,double fd){
-        motordf.setPower(-fd);
-        motorfs.setPower(fs);
-        motords.setPower(-ds);
-        motorss.setPower(ss);
+    public void Dreapta(double ss,double ds,double fs,double fd, int t, double lastTime){
+        lastTime = System.currentTimeMillis();
+        while(lastTime + t > System.currentTimeMillis()) {
+            motordf.setPower(-fd);
+            motorfs.setPower(-fs);
+            motords.setPower(-ds);
+            motorss.setPower(-ss);
+        }
+    }
+    public void RotireStanga(double ss,double ds,double fs,double fd, int t, double lastTime){
+        lastTime = System.currentTimeMillis();
+        while(lastTime + t > System.currentTimeMillis()) {
+            motordf.setPower(fd);
+            motorfs.setPower(-fs);
+            motords.setPower(ds);
+            motorss.setPower(ss);
+        }
+    }
+    public void RotireDreapta(double ss,double ds,double fs,double fd, int t){
+        lastTime = System.currentTimeMillis();
+        while(lastTime + t > System.currentTimeMillis()) {
+            motordf.setPower(-fd);
+            motorfs.setPower(fs);
+            motords.setPower(-ds);
+            motorss.setPower(ss);
+        }
+    }
+    public void WobbleGoal(double pow, double poz, int t){
+        lastTime = System.currentTimeMillis();
+        while(lastTime + t > System.currentTimeMillis()) {
+            grip.setPower(pow);
+        }
+        lastTime = System.currentTimeMillis();
+        while(lastTime + t * 1.3 > System.currentTimeMillis()) {
+            arm.setPower(poz);
+        }
+        arm.setPower(0);
+        lastTime = System.currentTimeMillis();
+        while(lastTime + t * 1.3 > System.currentTimeMillis()) {
+            grip.setPower(-1);
+        }
+        grip.setPower(0);
+        lastTime = System.currentTimeMillis();
+        while(lastTime + t * 1.3 > System.currentTimeMillis()) {
+            arm.setPower(-poz/1.5);
+        }
+        arm.setPower(0);
     }
 }

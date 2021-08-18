@@ -14,6 +14,10 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+
 import static java.lang.Math.abs;
 @TeleOp
 public class TeleOp_bun extends OpMode {
@@ -60,6 +64,8 @@ public class TeleOp_bun extends OpMode {
     private long sysTimeC;
     public ElapsedTime timer = new ElapsedTime();
     public boolean rotating = false;
+    public double realAngle, targetAngle;
+    Pid_Controller_Adevarat pid = new Pid_Controller_Adevarat(0.0,0.0,0.0);
 
 
     private Thread Chassis = new Thread( new Runnable() {
@@ -85,8 +91,10 @@ public class TeleOp_bun extends OpMode {
                 }
                 else{
                     if(rotating){
-
+                        targetAngle = realAngle;
+                        rotating = false;
                     }
+
                 }
 
 
@@ -263,6 +271,21 @@ public class TeleOp_bun extends OpMode {
             }
         }
     });
+
+    private Thread imuT = new Thread(new Runnable() {
+        double angle, lastAngle;
+        int rotations;
+        @Override
+        public void run() {
+            while(!stop){
+                lastAngle = angle;
+                angle = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
+                if(lastAngle > 170 && angle < -170) rotations++;
+                else if (lastAngle < -170 && angle > 170) rotations --;
+                realAngle = angle + 360 * rotations;
+            }
+        }
+    });
     @Override
     public void init() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -314,6 +337,7 @@ public class TeleOp_bun extends OpMode {
     public void start() {
         Chassis.start();
         Systems.start();
+        imuT.start();
     };
     /**using the loop function to send the telemetry to the phone*/
     @Override

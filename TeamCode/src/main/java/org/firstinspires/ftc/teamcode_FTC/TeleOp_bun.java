@@ -66,8 +66,7 @@ public class TeleOp_bun extends OpMode {
     public boolean rotating = false;
     public double realAngle, targetAngle;
     Pid_Controller_Adevarat pid = new Pid_Controller_Adevarat(0.0,0.0,0.0);
-
-
+    private long spasmCurrentTime = 0;
     private Thread Chassis = new Thread( new Runnable() {
         @Override
         public void run() {
@@ -84,7 +83,7 @@ public class TeleOp_bun extends OpMode {
                 forward = -gamepad1.left_stick_y;
                 right = gamepad1.left_stick_x;
                 clockwise = -gamepad1.right_stick_x;
-
+                pid.setPID(constants.pGyro,constants.iGyro,constants.dGyro);
                 if(clockwise != 0.0){
                     correction = 0.0;
                     rotating = true;
@@ -93,16 +92,17 @@ public class TeleOp_bun extends OpMode {
                     if(rotating){
                         targetAngle = realAngle;
                         rotating = false;
+                        pid.setSetpoint(targetAngle);
                     }
-
+                    correction = pid.performPID(realAngle);
                 }
 
 
                 /**calculating the power for motors */
-                df = forward + clockwise - right - correction;
-                ss = forward - clockwise - right + correction;
-                sf = -forward + clockwise - right - correction;
-                ds = -forward - clockwise - right + correction;
+                df = forward + clockwise - right + correction;
+                ss = forward - clockwise - right - correction;
+                sf = -forward + clockwise - right + correction;
+                ds = -forward - clockwise - right - correction;
 
                 /**normalising the power values*/
                 max = abs(sf);
@@ -160,19 +160,32 @@ public class TeleOp_bun extends OpMode {
                     }
                     alast = abut;
                 }
-                if(gamepad1.left_trigger > 0.2)
-                {
+                if(gamepad1.left_trigger > 0.0){
+                    stopper_left.setPosition(constants.stoppersts);
+                    spasmCurrentTime = System.currentTimeMillis();
+                }
+                if(gamepad1.left_trigger > 0.8){
                     grabber_left.setPosition(1 - gamepad1.left_trigger);
                 }
                 else{
                     grabber_left.setPosition(0.8);
                 }
-                if(gamepad1.right_trigger > 0.2)
+
+                if(gamepad1.right_trigger > 0)
                 {
+                    stopper_right.setPosition(constants.stopperdrs);
+                    spasmCurrentTime = System.currentTimeMillis();
+                }
+                if(gamepad1.right_trigger > 0.8){
                     grabber_right.setPosition(gamepad1.right_trigger);
                 }
                 else {
                     grabber_right.setPosition(0.2);
+                }
+
+                if(spasmCurrentTime + constants.spasmDelay < System.currentTimeMillis()){
+                    stopper_left.setPosition(constants.stopperst);
+                    stopper_right.setPosition(constants.stopperdr);
                 }
 
                 //stopper_left.setPosition()
@@ -288,6 +301,7 @@ public class TeleOp_bun extends OpMode {
     });
     @Override
     public void init() {
+        pid.disable();
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         /**initialization motors */
         motordf = hardwareMap.get(DcMotorEx.class, "motorFR");
@@ -306,7 +320,7 @@ public class TeleOp_bun extends OpMode {
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        imu.initialize(parameters);
 
 
         motords.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -331,6 +345,8 @@ public class TeleOp_bun extends OpMode {
         /**initialization system current time milliseconds */
         sysTimeC = System.currentTimeMillis();
         shuter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(constants.p, constants.i, constants.d, constants.f));
+        //stopper_left.setPosition(constants.stopperstin);
+        //stopper_right.setPosition(constants.stopperdrin);
         /**start the thread*/
     }
     @Override
@@ -350,6 +366,13 @@ public class TeleOp_bun extends OpMode {
         telemetry.addData("Th Chassis: ", fpsCLast);
         telemetry.addData("Launch:", shuter.getVelocity());
         telemetry.addData("stopper_left", stopper_left.getPosition());
+        telemetry.addData("realAngle:", realAngle);
+        telemetry.addData("P:", pid.getP() * pid.getError());
+        telemetry.addData("I:", pid.getI() * pid.getISum());
+        telemetry.addData("D:", pid.getD() * pid.getDError());
+        telemetry.addData("setPoint:", pid.getSetpoint());
+        telemetry.addData("Error:", pid.getError());
+        telemetry.addData("Correction:", correction);
         telemetry.update();
     }
 

@@ -388,8 +388,9 @@ public class TheRedNormalAutonomus extends LinearOpMode {
          */
             shuter.setVelocity(-2280);
 
-            stopper_left.setPosition(0.45);
-            stopper_right.setPosition(0.05);
+            stopper_right.setPosition(0.5);
+            stopper_left.setPosition(0.5);
+
 
             while(shuter.isBusy())
                 lastTime = System.currentTimeMillis();
@@ -432,7 +433,7 @@ public class TheRedNormalAutonomus extends LinearOpMode {
             shuter.setVelocity(-2090);
 
             //corectie laterala 2
-            Translatare(5, 10, 0.3);
+            Translatare(0, 10, 0.3);
             //pornire colectare
             //grabber_right.setPosition(1);
             intake.setPower(1.0);
@@ -458,7 +459,7 @@ public class TheRedNormalAutonomus extends LinearOpMode {
             Translatare(-10, 90, 0.3);
             //sleep(150);
 
-            //Rotire(-2, 0.3);
+            //Rotire(5, 0.3);
 
             //shoot 2 - 2
             shuter.setVelocity(-2100);
@@ -542,7 +543,7 @@ public class TheRedNormalAutonomus extends LinearOpMode {
             }
 
             //pozitionare livreare
-            Translatare(15, 75, 0.3); //x=25
+            Translatare(18, 77, 0.3); //x=25
             //sleep(100);
 
             intake.setPower(0);
@@ -582,7 +583,7 @@ public class TheRedNormalAutonomus extends LinearOpMode {
             //grabber_right.setPosition(0.5);
 
             //Translatare pana la wobble 2
-            Translatare(-50, -55, 0.3);
+            Translatare(-50, -50, 0.3);
             //sleep(50);
          /*
          grabber_left.setPosition(0.1);

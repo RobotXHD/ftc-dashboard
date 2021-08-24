@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
+
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -118,6 +120,7 @@ public class TheRedNormalAutonomus extends LinearOpMode {
         motorBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorFL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorFR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shuter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         motorBL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorBR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -127,7 +130,7 @@ public class TheRedNormalAutonomus extends LinearOpMode {
         grip.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         loader.setPosition(0.4);//0.32
-
+        shuter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(constants.p, constants.i, constants.d, constants.f));
 
         initVuforia( );
         initTfod();
@@ -658,8 +661,8 @@ public class TheRedNormalAutonomus extends LinearOpMode {
          Translatare(20, 0, 0.3);
          Translatare(0, 50, 0.3);
          */
-            stopper_left.setPosition(0.89);
-            stopper_right.setPosition(0.11);
+            stopper_right.setPosition(0.5);
+            stopper_left.setPosition(0.5);
 
             /*
             grabber_right.setPosition(0.5);
@@ -771,11 +774,14 @@ public class TheRedNormalAutonomus extends LinearOpMode {
             shuter.setVelocity(-2180);
             //Cnoc inele
             intake.setPower(1.0);
-            Translatare(13, 0, 0.3);
-            Translatare(0, 80, 0.25);
+            Translatare(7, 0, 0.3);
+            Translatare(0, 10, 0.5);
+            lastTime = System.currentTimeMillis();
+            while(lastTime + 100 > System.currentTimeMillis()) {
+            }
+            Translatare(0, 70, 0.2);
             lastTime = System.currentTimeMillis();
             while(lastTime + 50 > System.currentTimeMillis()){
-
             }
             intake.setPower(1.0);
 
@@ -788,7 +794,7 @@ public class TheRedNormalAutonomus extends LinearOpMode {
             }
             //sleep(50);
 
-            Translatare(0, 37, 0.35);// X = 40
+            Translatare(-10, 37, 0.35);// X = 40
             lastTime = System.currentTimeMillis();
             while(lastTime + 50 > System.currentTimeMillis()){
 
@@ -797,7 +803,7 @@ public class TheRedNormalAutonomus extends LinearOpMode {
             //Rotire(10, 0.3);
             //sleep(100);
 
-            Rotire(4, 0.3);
+            Rotire(8, 0.3);
 
             //grabber_right.setPosition(0.2);
             //grabber_left.setPosition(0.8);

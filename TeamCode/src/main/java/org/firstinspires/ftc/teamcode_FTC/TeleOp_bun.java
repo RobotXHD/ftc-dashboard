@@ -47,7 +47,7 @@ public class TeleOp_bun extends OpMode {
     private double once=1;
     private double cn=0;
     double correction;
-    double VelVar = 2150;
+    double VelVar = 2155;
     double poz=0, gpoz=0;
     double timeLimit = 0.3;
     /**variables for holding the gamepad joystick values;
@@ -163,6 +163,7 @@ public class TeleOp_bun extends OpMode {
                 if(gamepad1.left_trigger > 0.0){
                     stopper_left.setPosition(constants.stoppersts);
                     spasmCurrentTime = System.currentTimeMillis();
+                    VelVar=VelVar + 5;
                 }
                 if(gamepad1.left_trigger > 0.8){
                     grabber_left.setPosition(1 - gamepad1.left_trigger);
@@ -175,6 +176,7 @@ public class TeleOp_bun extends OpMode {
                 {
                     stopper_right.setPosition(constants.stopperdrs);
                     spasmCurrentTime = System.currentTimeMillis();
+                    VelVar=VelVar - 5;
                 }
                 if(gamepad1.right_trigger > 0.8){
                     grabber_right.setPosition(gamepad1.right_trigger);
@@ -261,7 +263,7 @@ public class TeleOp_bun extends OpMode {
                 boolean cnbut = gamepad1.y;
                 if (cnlast != cnbut) {
                     if (gamepad1.y) {
-                        if (cnpoz == 0) shuter.setVelocity(2155);
+                        if (cnpoz == 0) shuter.setVelocity(2155);//2155
                         else if(cnpoz == 1) shuter.setVelocity(0);
                         cnpoz++;
                         if(cnpoz == 2){
@@ -274,8 +276,8 @@ public class TeleOp_bun extends OpMode {
                 //SHOOTER-POWER-SHOT
                 if(gamepad1.x)
                 {
-                    VelVar = 1970;
-                    shuter.setVelocity(1973);//1950
+                    VelVar = 1973;
+                    shuter.setVelocity(1973);//1973
                 }
                 if(gamepad1.back)
                 {

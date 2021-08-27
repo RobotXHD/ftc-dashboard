@@ -99,9 +99,9 @@ public class TheRedNormalAutonomus extends LinearOpMode {
         arm     = (DcMotorEx) hardwareMap.dcMotor.get("arm");
         grip    = (DcMotorEx) hardwareMap.dcMotor.get("grip");
         loader  = hardwareMap.servo.get("loader");
-        grabber_left  = hardwareMap.servo.get("grabber_left");
+        grabber_left   = hardwareMap.servo.get("grabber_left");
         grabber_right  = hardwareMap.servo.get("grabber_right");
-        stopper_left  = hardwareMap.servo.get("stopper_left");
+        stopper_left   = hardwareMap.servo.get("stopper_left");
         stopper_right  = hardwareMap.servo.get("stopper_right");
 
         // Send telemetry message to signify robot waiting;
@@ -150,32 +150,33 @@ public class TheRedNormalAutonomus extends LinearOpMode {
         else if(rezultat == LABEL_FIRST_ELEMENT)  varrez=3;
         telemetry.addData("var",varrez );
         telemetry.update();
+
         if(varrez==1)
         {
          /*
          Translatare(20, 0, 0.3);
          Translatare(0, 50, 0.3);
          */
-            shuter.setVelocity(-2100);//2080
+            shuter.setVelocity(-2200);//2080
             //pozitionare shoot 1
-            stopper_left.setPosition(0.89);
-            stopper_right.setPosition(0.11);
+            stopper_left.setPosition(0.5);
+            stopper_right.setPosition(0.5);
 
-            Translatare(10, 160, 0.3);//x=-5
+            Translatare(0, 160, 0.3);//x=-5
             lastTime = System.currentTimeMillis();
-            while(lastTime + 100 > System.currentTimeMillis()){
+            while(lastTime + 200 > System.currentTimeMillis()){
 
             }
             Rotire(6, 0.3);
 
             //shoot 1 - 1
-            shuter.setVelocity(-2110);//2080
+            shuter.setVelocity(-2220);//2080
             loader.setPosition(Lpos);
             lastTime = System.currentTimeMillis();
             while(lastTime + 400 > System.currentTimeMillis()){
 
             }
-            shuter.setVelocity(-2100);//2080
+            shuter.setVelocity(-2210);//2080
             loader.setPosition(0.2);
             lastTime = System.currentTimeMillis();
             while(lastTime + 500 > System.currentTimeMillis()){
@@ -183,13 +184,13 @@ public class TheRedNormalAutonomus extends LinearOpMode {
             }
 
             //shoot 1 - 2
-            shuter.setVelocity(-2110);//2080
+            shuter.setVelocity(-2220);//2080
             loader.setPosition(Lpos);
             lastTime = System.currentTimeMillis();
             while(lastTime + 500 > System.currentTimeMillis()){
 
             }
-            shuter.setVelocity(-2100);//2080
+            shuter.setVelocity(-2220);//2080
             loader.setPosition(0.2);
             lastTime = System.currentTimeMillis();
             while(lastTime + 400 > System.currentTimeMillis()){
@@ -202,13 +203,13 @@ public class TheRedNormalAutonomus extends LinearOpMode {
             }
 
             // shoot 1 - 3
-            shuter.setVelocity(-2110);//2080
+            shuter.setVelocity(-2180);//2080
             loader.setPosition(Lpos);
             lastTime = System.currentTimeMillis();
             while(lastTime + 400 > System.currentTimeMillis()){
 
             }
-            shuter.setVelocity(-2100);//2080
+            shuter.setVelocity(-2170);//2080
             loader.setPosition(0.2);
             lastTime = System.currentTimeMillis();
             while(lastTime + 400 > System.currentTimeMillis()){
@@ -225,8 +226,10 @@ public class TheRedNormalAutonomus extends LinearOpMode {
 
             }
 
-            Translatare(80, 5, 0.3);
-            //Rotire(-90, 0.3);
+            //Translatare(80, 10, 0.3);
+            Translatare(0, 60, 0.3);;
+            Rotire(-130, 0.3);
+            Translatare(10, 30, 0.2);
             //sleep(100);
 
             intake.setPower(0);
@@ -258,119 +261,10 @@ public class TheRedNormalAutonomus extends LinearOpMode {
             while(lastTime + 100 > System.currentTimeMillis()){
 
             }
+            Translatare(0, -30, 0.3);
+            Rotire(120, 0.3);
 
-            Translatare(-115, 40, 0.3);
-
-            arm.setTargetPosition(-100);//-321; -400
-            arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            arm.setPower(1.0);
-            while(arm.isBusy());
-            arm.setPower(0);
-            arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            //parcare brat 1
-     /*
-     arm.setTargetPosition(-10);
-     arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-     arm.setPower(1.0);
-     while(arm.isBusy());
-     arm.setPower(0);
-     arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-     sleep(100);
-     //parcare 1
-     //Translatare(-20, -15, 0.3);
-     //sleep(100);
-     */
-            //000000000000000000000000000000000000000000000000000
-
-            //Rotire traseu wobble 2
-            //Rotire(-165, 0.4);
-            //sleep(100);
-            /*
-            Translatare(0, -103, 0.3);//-10
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 100 > System.currentTimeMillis()){
-
-            }
-
-            Rotire(202, 0.3);
-
-            arm.setTargetPosition(-551);//-521
-            arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            arm.setPower(1.0);
-            while(arm.isBusy() && opModeIsActive());
-            arm.setPower(0);
-            arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 100 > System.currentTimeMillis()){
-
-            }
-
-            //Translatare(0, 5, 0.3);
-
-            grip.setTargetPosition(25); //-15
-            grip.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            grip.setPower(1.0);
-            while(grip.isBusy());
-            grip.setPower(0);
-            grip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 100 > System.currentTimeMillis()){
-
-            }
-
-            arm.setTargetPosition(-400);//-321; -400
-            arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            arm.setPower(1.0);
-            while(arm.isBusy());
-            arm.setPower(0);
-            arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 100 > System.currentTimeMillis()){
-
-            }
-
-            Rotire(-190,0.3);
-
-            Translatare(5, 85, 0.65);
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 100 > System.currentTimeMillis()){
-
-            }
-
-            Rotire(-25, 0.3);
-            //Translatare(-10, 20, 0.3);
-     /*
-     arm.setTargetPosition(-350);
-     arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-     arm.setPower(1.0);
-     while(arm.isBusy());
-     arm.setPower(0);
-     arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-     sleep(100);
-     */
-            /*
-            //eliberare wobble 2
-            grip.setTargetPosition(350); //-15
-            grip.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            grip.setPower(1.0);
-            while(grip.isBusy());
-            grip.setPower(0);
-            grip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 100 > System.currentTimeMillis()){
-
-            }
-
-            Translatare (0, -40, 0.6);
-            Translatare (-80, 60 ,0.5);
-            //Translatare (0, 0, 0.65);
-
-
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 50 > System.currentTimeMillis()){
-
-            }
+            Translatare(-30, -20, 0.3);
 
             arm.setTargetPosition(-100);//-321; -400
             arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -378,9 +272,6 @@ public class TheRedNormalAutonomus extends LinearOpMode {
             while(arm.isBusy());
             arm.setPower(0);
             arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            //shuter.setVelocity(0);
-            */
-
         }
 
         if(varrez == 2)
@@ -389,7 +280,7 @@ public class TheRedNormalAutonomus extends LinearOpMode {
          Translatare(20, 0, 0.3);
          Translatare(0, 50, 0.3);
          */
-            shuter.setVelocity(-2280);
+            shuter.setVelocity(-2400);
 
             stopper_right.setPosition(0.5);
             stopper_left.setPosition(0.5);
@@ -413,7 +304,11 @@ public class TheRedNormalAutonomus extends LinearOpMode {
 
             //shuter.setVelocity(-2260);
             //pozitionare shoot 2
-            Translatare(10, 62, 0.3);
+            Translatare(0, 70, 0.3);
+            lastTime = System.currentTimeMillis();
+            while(lastTime + 550 > System.currentTimeMillis()){
+
+            }
 
             //sleep(50);
             //shuter.setVelocity(-2310);
@@ -422,7 +317,7 @@ public class TheRedNormalAutonomus extends LinearOpMode {
 
             Rotire(5, 0.3);
             //shoot 2 - 1 un inel inainte de colectare
-            shuter.setVelocity(-2300);
+            shuter.setVelocity(-2520);
             loader.setPosition(Lpos);
             lastTime = System.currentTimeMillis();
             while(lastTime + 400 > System.currentTimeMillis()){
@@ -433,7 +328,7 @@ public class TheRedNormalAutonomus extends LinearOpMode {
             while(lastTime + 400 > System.currentTimeMillis()){
 
             }
-            shuter.setVelocity(-2090);
+            shuter.setVelocity(-2120);
 
             //corectie laterala 2
             Translatare(0, 10, 0.3);
@@ -458,95 +353,95 @@ public class TheRedNormalAutonomus extends LinearOpMode {
 
 
             //pozitionare shoot linie 2
-            shuter.setVelocity(-2090);
-            Translatare(-10, 90, 0.3);
+            shuter.setVelocity(-2110);
+            Translatare(-12, 90, 0.3);
             //sleep(150);
 
-            //Rotire(5, 0.3);
+            Rotire(-7, 0.3);
 
             //shoot 2 - 2
-            shuter.setVelocity(-2100);
+            shuter.setVelocity(-2120);
             loader.setPosition(Lpos);
             lastTime = System.currentTimeMillis();
             while(lastTime + 400 > System.currentTimeMillis()){
 
             }
             loader.setPosition(0.2);
-            shuter.setVelocity(-2090);
+            shuter.setVelocity(-2150);
             lastTime = System.currentTimeMillis();
             while(lastTime + 500 > System.currentTimeMillis()){
 
             }
 
-            shuter.setVelocity(-2100);
+            shuter.setVelocity(-2170);
             loader.setPosition(Lpos);
             lastTime = System.currentTimeMillis();
             while(lastTime + 400 > System.currentTimeMillis()){
 
             }
             loader.setPosition(0.2);
-            shuter.setVelocity(-2090);
+            shuter.setVelocity(-2110);
             lastTime = System.currentTimeMillis();
             while(lastTime + 500 > System.currentTimeMillis()){
 
             }
 
             //shoot 2 - 3
-            shuter.setVelocity(-2100);
+            shuter.setVelocity(-2120);
             loader.setPosition(Lpos);
             lastTime = System.currentTimeMillis();
             while(lastTime + 400 > System.currentTimeMillis()){
 
             }
             loader.setPosition(0.2);
-            shuter.setVelocity(-2090);
+            shuter.setVelocity(-2110);
             lastTime = System.currentTimeMillis();
             while(lastTime + 500 > System.currentTimeMillis()){
 
             }
 
-            shuter.setVelocity(-2100);
+            shuter.setVelocity(-2120);
             loader.setPosition(Lpos);
             lastTime = System.currentTimeMillis();
             while(lastTime + 400 > System.currentTimeMillis()){
 
             }
             loader.setPosition(0.2);
-            shuter.setVelocity(-2090);
+            shuter.setVelocity(-2110);
             lastTime = System.currentTimeMillis();
             while(lastTime + 500 > System.currentTimeMillis()){
 
             }
 
             //shoot 2 - 4
-            shuter.setVelocity(-2100);
+            shuter.setVelocity(-2120);
             loader.setPosition(Lpos);
             lastTime = System.currentTimeMillis();
             while(lastTime + 400 > System.currentTimeMillis()){
 
             }
             loader.setPosition(0.2);
-            shuter.setVelocity(-2090);
+            shuter.setVelocity(-2110);
             lastTime = System.currentTimeMillis();
             while(lastTime + 500 > System.currentTimeMillis()){
 
             }
 
-            shuter.setVelocity(-2100);
+            shuter.setVelocity(-2120);
             loader.setPosition(Lpos);
             lastTime = System.currentTimeMillis();
             while(lastTime + 400 > System.currentTimeMillis()){
 
             }
             loader.setPosition(0.2);
-            shuter.setVelocity(-2090);
+            shuter.setVelocity(-2110);
             lastTime = System.currentTimeMillis();
             while(lastTime + 500 > System.currentTimeMillis()){
 
             }
 
             //pozitionare livreare
-            Translatare(18, 77, 0.3); //x=25
+            Translatare(20, 100, 0.3); //x=25
             //sleep(100);
 
             intake.setPower(0);
@@ -570,6 +465,8 @@ public class TheRedNormalAutonomus extends LinearOpMode {
             grip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             //sleep(100);
 
+            Translatare(-30, -50, 0.3);
+
             arm.setTargetPosition(-100);//-350
             arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             arm.setPower(1.0);
@@ -586,7 +483,7 @@ public class TheRedNormalAutonomus extends LinearOpMode {
             //grabber_right.setPosition(0.5);
 
             //Translatare pana la wobble 2
-            Translatare(-50, -50, 0.3);
+
             //sleep(50);
          /*
          grabber_left.setPosition(0.1);
@@ -676,7 +573,7 @@ public class TheRedNormalAutonomus extends LinearOpMode {
 
             //intake.setPower(1.0);
 
-            shuter.setVelocity(-2280);
+            shuter.setVelocity(-2530);
             //pozitionare shoot 3
             Translatare(10, 57, 0.3);
 
@@ -691,12 +588,12 @@ public class TheRedNormalAutonomus extends LinearOpMode {
             //grabber_right.setPosition(0.9);
             //sleep(300);
             //grabber_right.setPosition(0.2);
-            //Rotire(4, 0.3);
+            Rotire(4, 0.3);
 
             //shoot 3 - 1
-            shuter.setVelocity(-2295);
+            shuter.setVelocity(-2370);
             lastTime = System.currentTimeMillis();
-            while(lastTime + 15 > System.currentTimeMillis()){
+            while(lastTime + 500 > System.currentTimeMillis()){
 
             }
             loader.setPosition(Lpos);
@@ -705,14 +602,14 @@ public class TheRedNormalAutonomus extends LinearOpMode {
 
             }
             loader.setPosition(0.2);
-            shuter.setVelocity(-2285);
+            shuter.setVelocity(-2420);
             lastTime = System.currentTimeMillis();
             while(lastTime + 500 > System.currentTimeMillis()){
 
             }//300
 
             //shoot 3 - 2
-            shuter.setVelocity(-2295);
+            shuter.setVelocity(-2380);
             lastTime = System.currentTimeMillis();
             while(lastTime + 10 > System.currentTimeMillis()){
 
@@ -723,14 +620,14 @@ public class TheRedNormalAutonomus extends LinearOpMode {
 
             }
             loader.setPosition(0.2);
-            shuter.setVelocity(-2285);
+            shuter.setVelocity(-2390);
             lastTime = System.currentTimeMillis();
             while(lastTime + 400 > System.currentTimeMillis()){
 
             }
 
             //shoot 3 - 3
-            shuter.setVelocity(-2295);
+            shuter.setVelocity(-2420);
             lastTime = System.currentTimeMillis();
             while(lastTime + 10 > System.currentTimeMillis()){
 
@@ -741,14 +638,14 @@ public class TheRedNormalAutonomus extends LinearOpMode {
 
             }
             loader.setPosition(0.2);
-            shuter.setVelocity(-2285);
+            shuter.setVelocity(-2390);
             lastTime = System.currentTimeMillis();
             while(lastTime + 400 > System.currentTimeMillis()){
 
             }
 
             //shoot 3 - 4
-            shuter.setVelocity(-2295);
+            shuter.setVelocity(-2400);
             lastTime = System.currentTimeMillis();
             while(lastTime + 10 > System.currentTimeMillis()){
 
@@ -759,7 +656,7 @@ public class TheRedNormalAutonomus extends LinearOpMode {
 
             }
             loader.setPosition(0.2);
-            shuter.setVelocity(-2285);
+            shuter.setVelocity(-2390);
             lastTime = System.currentTimeMillis();
             while(lastTime + 400 > System.currentTimeMillis()){
 
@@ -774,27 +671,28 @@ public class TheRedNormalAutonomus extends LinearOpMode {
             shuter.setVelocity(-2180);
             //Cnoc inele
             intake.setPower(1.0);
-            Translatare(7, 0, 0.3);
-            Translatare(0, 10, 0.5);
+            Translatare(3, 0, 0.3);
+            //Translatare(-5, -5, 0.5);
+            Translatare(0, 30, 0.6);
             lastTime = System.currentTimeMillis();
             while(lastTime + 100 > System.currentTimeMillis()) {
             }
-            Translatare(0, 70, 0.2);
+            Translatare(0, 25, 0.2);
             lastTime = System.currentTimeMillis();
-            while(lastTime + 50 > System.currentTimeMillis()){
+            while(lastTime + 50 > System.currentTimeMillis()){`
             }
             intake.setPower(1.0);
 
 
 
-            Translatare(0, -64, 0.35);// X = -18
+            Translatare(0, -47, 0.35);// X = -18
             lastTime = System.currentTimeMillis();
             while(lastTime + 50 > System.currentTimeMillis()){
 
             }
             //sleep(50);
 
-            Translatare(-10, 37, 0.35);// X = 40
+            Translatare(-10, 47, 0.35);// X = 40
             lastTime = System.currentTimeMillis();
             while(lastTime + 50 > System.currentTimeMillis()){
 
@@ -803,10 +701,12 @@ public class TheRedNormalAutonomus extends LinearOpMode {
             //Rotire(10, 0.3);
             //sleep(100);
 
-            Rotire(8, 0.3);
+            //Rotire(-8, 0.3);
 
             //grabber_right.setPosition(0.2);
             //grabber_left.setPosition(0.8);
+
+            Rotire(2, 0.3);
 
             //shoot 3 - 4
             shuter.setVelocity(-2215);

@@ -679,7 +679,7 @@ public class TheRedNormalAutonomus extends LinearOpMode {
             }
             Translatare(0, 25, 0.2);
             lastTime = System.currentTimeMillis();
-            while(lastTime + 50 > System.currentTimeMillis()){`
+            while(lastTime + 50 > System.currentTimeMillis()){
             }
             intake.setPower(1.0);
 

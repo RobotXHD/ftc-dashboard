@@ -89,7 +89,7 @@ public class TeleOp_bun extends OpMode {
                     rotating = true;
                 }
                 else{
-                    if(rotating){
+                    if(rotating && clockwise == 0.0){
                         targetAngle = realAngle;
                         rotating = false;
                         pid.setSetpoint(targetAngle);

@@ -296,20 +296,20 @@ public class TheSimpleRedAutonomus extends LinearOpMode {
 
             }
 
-            Rotire(22, 0.3);
+            Rotire(17, 0.3);
             lastTime = System.currentTimeMillis();
             while(lastTime + 100 > System.currentTimeMillis()){
             }
 
 
             //shoot 1 - 1
-            shuter.setVelocity(-2305);//2080
+            shuter.setVelocity(-2240);//2080
             loader.setPosition(Lpos);
             lastTime = System.currentTimeMillis();
             while(lastTime + 400 > System.currentTimeMillis()){
 
             }
-            shuter.setVelocity(-2250);//2080
+            shuter.setVelocity(-2220);//2080
             loader.setPosition(0.2);
             lastTime = System.currentTimeMillis();
             while(lastTime + 500 > System.currentTimeMillis()){
@@ -317,7 +317,7 @@ public class TheSimpleRedAutonomus extends LinearOpMode {
             }
 
             //shoot 1 - 2
-            shuter.setVelocity(-2210);//2080
+            shuter.setVelocity(-2190);//2080
             loader.setPosition(Lpos);
             lastTime = System.currentTimeMillis();
             while(lastTime + 500 > System.currentTimeMillis()){
@@ -336,13 +336,13 @@ public class TheSimpleRedAutonomus extends LinearOpMode {
             }
 
             // shoot 1 - 3
-            shuter.setVelocity(-2210);//2080
+            shuter.setVelocity(-2170);//2080
             loader.setPosition(Lpos);
             lastTime = System.currentTimeMillis();
             while(lastTime + 400 > System.currentTimeMillis()){
 
             }
-            shuter.setVelocity(-2180);//2080
+            shuter.setVelocity(-2160);//2080
             loader.setPosition(0.2);
             lastTime = System.currentTimeMillis();
             while(lastTime + 500 > System.currentTimeMillis()){
@@ -359,7 +359,7 @@ public class TheSimpleRedAutonomus extends LinearOpMode {
 
             }
 
-            Rotire(-20, 0.3);
+            Rotire(-15, 0.3);
 
             //Translatare(0, 100, 0.3);
             //Rotire(-90, 0.3);
@@ -371,7 +371,7 @@ public class TheSimpleRedAutonomus extends LinearOpMode {
             Translatare(-15,85, 0.3);
             //sleep(100);
             Rotire(45, 0.3);
-            Translatare(0, 20, 0.3);
+            Translatare(0, 10, 0.3);
 
             //brat livrare 1
             arm.setTargetPosition(-400);//-400

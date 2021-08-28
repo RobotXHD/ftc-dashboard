@@ -18,6 +18,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.lang.Math.abs;
 @TeleOp
 public class TeleOp_bun extends OpMode {
@@ -67,6 +71,9 @@ public class TeleOp_bun extends OpMode {
     public double realAngle, targetAngle;
     Pid_Controller_Adevarat pid = new Pid_Controller_Adevarat(0.0,0.0,0.0);
     private long spasmCurrentTime = 0;
+    private long pidTime = 0;
+    public double difference,medie;
+    public double medii[] = new double[10];
     private Thread Chassis = new Thread( new Runnable() {
         @Override
         public void run() {
@@ -89,12 +96,17 @@ public class TeleOp_bun extends OpMode {
                     rotating = true;
                 }
                 else{
-                    if(rotating && clockwise == 0.0){
-                        targetAngle = realAngle;
-                        rotating = false;
-                        pid.setSetpoint(targetAngle);
+                    if((forward != 0.0 || right != 0.0) && Math.abs(medie) < 0.5) {
+                        if (rotating) {
+                            targetAngle = realAngle;
+                            rotating = false;
+                            pid.setSetpoint(targetAngle);
+                        }
+                        correction = pid.performPID(realAngle);
                     }
-                    correction = pid.performPID(realAngle);
+                    else{
+                        correction = 0.0;
+                    }
                 }
 
 
@@ -295,6 +307,17 @@ public class TeleOp_bun extends OpMode {
             while(!stop){
                 lastAngle = angle;
                 angle = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
+                difference = angle - lastAngle;
+                if(Math.abs(difference) < 200){
+                    for(int i = 9; i > 0; i--){
+                        medii[i] = medii[i-1];
+                    }
+                    medii[0] = difference;
+                    for (int i = 9; i > 0; i--) {
+                        medie += medii[i];
+                    }
+                    medie /= 10.0;
+                }
                 if(lastAngle > 170 && angle < -170) rotations++;
                 else if (lastAngle < -170 && angle > 170) rotations --;
                 realAngle = angle + 360 * rotations;
@@ -303,7 +326,7 @@ public class TeleOp_bun extends OpMode {
     });
     @Override
     public void init() {
-        pid.disable();
+        pid.enable();
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         /**initialization motors */
         motordf = hardwareMap.get(DcMotorEx.class, "motorFR");
@@ -375,6 +398,7 @@ public class TeleOp_bun extends OpMode {
         telemetry.addData("setPoint:", pid.getSetpoint());
         telemetry.addData("Error:", pid.getError());
         telemetry.addData("Correction:", correction);
+        telemetry.addData("Difference:", medie);
         telemetry.update();
     }
 

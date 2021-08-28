@@ -168,9 +168,9 @@ public class TheSimpleBlueAutonomus extends LinearOpMode {
 
             }
 
-            Rotire(-8, 0.3);
+            Rotire(-6, 0.3);
             lastTime = System.currentTimeMillis();
-            while(lastTime + 100 > System.currentTimeMillis()){
+            while(lastTime + 300 > System.currentTimeMillis()){
             }
 
 
@@ -214,7 +214,7 @@ public class TheSimpleBlueAutonomus extends LinearOpMode {
             while(lastTime + 400 > System.currentTimeMillis()){
 
             }
-            shuter.setVelocity(-2200);//2080
+            shuter.setVelocity(-2150);//2080
             loader.setPosition(0.2);
             lastTime = System.currentTimeMillis();
             while(lastTime + 500 > System.currentTimeMillis()){
@@ -240,7 +240,7 @@ public class TheSimpleBlueAutonomus extends LinearOpMode {
             intake.setPower(0);
 
             //pozitionare livrare 1
-            Translatare(-30, 20, 0.3);
+            Translatare(-30, 10, 0.3);
             //sleep(100);
 
             //brat livrare 1
@@ -267,16 +267,17 @@ public class TheSimpleBlueAutonomus extends LinearOpMode {
 
             }
 
-            Translatare(0, -30, 0.3);
-            Translatare(40, 0, 0.3);
-            /*
+            Translatare(0, -20, 0.3);
+            Translatare(50, 0, 0.3);
+            Translatare(0, 40, 0.3);
+
             arm.setTargetPosition(-100);//-321; -400
             arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             arm.setPower(1.0);
             while(arm.isBusy());
             arm.setPower(0);
             arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            */
+
 
             //parcare brat 1
      /*
@@ -291,106 +292,6 @@ public class TheSimpleBlueAutonomus extends LinearOpMode {
      //Translatare(-20, -15, 0.3);
      //sleep(100);
      */
-            //000000000000000000000000000000000000000000000000000
-
-            //Rotire traseu wobble 2
-            //Rotire(-165, 0.4);
-            //sleep(100);
-            /*
-            Translatare(0, -103, 0.3);//-10
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 100 > System.currentTimeMillis()){
-
-            }
-
-            Rotire(202, 0.3);
-
-            arm.setTargetPosition(-551);//-521
-            arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            arm.setPower(1.0);
-            while(arm.isBusy() && opModeIsActive());
-            arm.setPower(0);
-            arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 100 > System.currentTimeMillis()){
-
-            }
-
-            //Translatare(0, 5, 0.3);
-
-            grip.setTargetPosition(25); //-15
-            grip.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            grip.setPower(1.0);
-            while(grip.isBusy());
-            grip.setPower(0);
-            grip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 100 > System.currentTimeMillis()){
-
-            }
-
-            arm.setTargetPosition(-400);//-321; -400
-            arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            arm.setPower(1.0);
-            while(arm.isBusy());
-            arm.setPower(0);
-            arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 100 > System.currentTimeMillis()){
-
-            }
-
-            Rotire(-190,0.3);
-
-            Translatare(5, 85, 0.65);
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 100 > System.currentTimeMillis()){
-
-            }
-
-            Rotire(-25, 0.3);
-            //Translatare(-10, 20, 0.3);
-     /*
-     arm.setTargetPosition(-350);
-     arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-     arm.setPower(1.0);
-     while(arm.isBusy());
-     arm.setPower(0);
-     arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-     sleep(100);
-     */
-            /*
-            //eliberare wobble 2
-            grip.setTargetPosition(350); //-15
-            grip.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            grip.setPower(1.0);
-            while(grip.isBusy());
-            grip.setPower(0);
-            grip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 100 > System.currentTimeMillis()){
-
-            }
-
-            Translatare (0, -40, 0.6);
-            Translatare (-80, 60 ,0.5);
-            //Translatare (0, 0, 0.65);
-
-
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 50 > System.currentTimeMillis()){
-
-            }
-
-            arm.setTargetPosition(-100);//-321; -400
-            arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            arm.setPower(1.0);
-            while(arm.isBusy());
-            arm.setPower(0);
-            arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            //shuter.setVelocity(0);
-            */
-
         }
 
         if(varrez == 2)
@@ -405,13 +306,14 @@ public class TheSimpleBlueAutonomus extends LinearOpMode {
             stopper_right.setPosition(0.5);
             stopper_left.setPosition(0.5);
 
-            Translatare(-20, 160, 0.3);//x=-5
+            Translatare(-30 ,0, 0.3);
+            Translatare(0, 160, 0.3);//x=-5
             lastTime = System.currentTimeMillis();
             while(lastTime + 100 > System.currentTimeMillis()){
 
             }
 
-            Rotire(-8, 0.3);
+            Rotire(-10, 0.3);
             lastTime = System.currentTimeMillis();
             while(lastTime + 100 > System.currentTimeMillis()){
             }
@@ -474,7 +376,7 @@ public class TheSimpleBlueAutonomus extends LinearOpMode {
 
             }
 
-            Rotire(8, 0.3);
+            Rotire(5, 0.3);
 
             //Translatare(0, 100, 0.3);
             //Rotire(-90, 0.3);
@@ -485,7 +387,7 @@ public class TheSimpleBlueAutonomus extends LinearOpMode {
             //pozitionare livrare 1
             Translatare(0, 60, 0.3);
             //sleep(100);
-            Rotire(-80, 0.3);
+            Rotire(-50, 0.3);
             Translatare(0, 20, 0.3);
 
             //brat livrare 1
@@ -512,10 +414,10 @@ public class TheSimpleBlueAutonomus extends LinearOpMode {
 
             }
 
-            Rotire(80, 0.3);
+            Rotire(60, 0.3);
 
             Translatare(0, -30, 0.3);
-            Translatare(-10, 0, 0.3);
+            Translatare(-30, 0, 0.3);
         }
         if(varrez == 3)
         {

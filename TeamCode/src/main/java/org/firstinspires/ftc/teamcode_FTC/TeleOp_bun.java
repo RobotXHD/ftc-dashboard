@@ -275,7 +275,9 @@ public class TeleOp_bun extends OpMode {
                 boolean cnbut = gamepad1.y;
                 if (cnlast != cnbut) {
                     if (gamepad1.y) {
-                        if (cnpoz == 0) shuter.setVelocity(2155);//2155
+                        if (cnpoz == 0) shuter.setVelocity(2155);//2155 ce trebuie
+                        //in spatele patratului aprox. 2260
+                        //lipit de gard aprox. 2460
                         else if(cnpoz == 1) shuter.setVelocity(0);
                         cnpoz++;
                         if(cnpoz == 2){

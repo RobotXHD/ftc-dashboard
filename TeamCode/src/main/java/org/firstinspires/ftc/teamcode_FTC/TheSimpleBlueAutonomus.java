@@ -359,7 +359,7 @@ public class TheSimpleBlueAutonomus extends LinearOpMode {
             while(lastTime + 400 > System.currentTimeMillis()){
 
             }
-            shuter.setVelocity(-2220);//2080
+            shuter.setVelocity(-2190);//2080
             loader.setPosition(0.2);
             lastTime = System.currentTimeMillis();
             while(lastTime + 500 > System.currentTimeMillis()){
@@ -385,9 +385,9 @@ public class TheSimpleBlueAutonomus extends LinearOpMode {
             intake.setPower(0);
 
             //pozitionare livrare 1
-            Translatare(0, 60, 0.3);
+            Translatare(0, 65, 0.3);
             //sleep(100);
-            Rotire(-50, 0.3);
+            Rotire(-40, 0.3);
             Translatare(0, 20, 0.3);
 
             //brat livrare 1
@@ -418,7 +418,15 @@ public class TheSimpleBlueAutonomus extends LinearOpMode {
 
             Translatare(0, -30, 0.3);
             Translatare(-30, 0, 0.3);
+
+            arm.setTargetPosition(-100);//-321; -400
+            arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            arm.setPower(1.0);
+            while(arm.isBusy());
+            arm.setPower(0);
+            arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
+
         if(varrez == 3)
         {
          /*

@@ -166,20 +166,20 @@ public class TheBlueNormalAutonomus extends LinearOpMode {
             while(lastTime + 100 > System.currentTimeMillis()){
 
             }
-            Rotire(25, 0.3);
+            Rotire(22, 0.3);
             lastTime = System.currentTimeMillis();
             while(lastTime + 100 > System.currentTimeMillis()){
 
             }
 
             //shoot 1 - 1
-            shuter.setVelocity(-2110);//2080
+            shuter.setVelocity(-2150);//2080
             loader.setPosition(Lpos);
             lastTime = System.currentTimeMillis();
             while(lastTime + 400 > System.currentTimeMillis()){
 
             }
-            shuter.setVelocity(-2100);//2080
+            shuter.setVelocity(-2140);//2080
             loader.setPosition(0.2);
             lastTime = System.currentTimeMillis();
             while(lastTime + 500 > System.currentTimeMillis()){
@@ -187,13 +187,13 @@ public class TheBlueNormalAutonomus extends LinearOpMode {
             }
 
             //shoot 1 - 2
-            shuter.setVelocity(-2110);//2080
+            shuter.setVelocity(-2150);//2080
             loader.setPosition(Lpos);
             lastTime = System.currentTimeMillis();
             while(lastTime + 500 > System.currentTimeMillis()){
 
             }
-            shuter.setVelocity(-2100);//2080
+            shuter.setVelocity(-2140);//2080
             loader.setPosition(0.2);
             lastTime = System.currentTimeMillis();
             while(lastTime + 400 > System.currentTimeMillis()){
@@ -206,13 +206,13 @@ public class TheBlueNormalAutonomus extends LinearOpMode {
             }
 
             // shoot 1 - 3
-            shuter.setVelocity(-2110);//2080
+            shuter.setVelocity(-2150);//2080
             loader.setPosition(Lpos);
             lastTime = System.currentTimeMillis();
             while(lastTime + 400 > System.currentTimeMillis()){
 
             }
-            shuter.setVelocity(-2100);//2080
+            shuter.setVelocity(-2140);//2080
             loader.setPosition(0.2);
             lastTime = System.currentTimeMillis();
             while(lastTime + 500 > System.currentTimeMillis()){
@@ -231,8 +231,9 @@ public class TheBlueNormalAutonomus extends LinearOpMode {
 
             Rotire(-23, 0.3);
 
-            Translatare(-75, 25, 0.3);
-            //Rotire(-90, 0.3);
+            Translatare(-10, 55, 0.3);
+            Rotire(85, 0.3);
+            Translatare(0, 30, 0.3);
             //sleep(100);
 
             intake.setPower(0);
@@ -265,7 +266,8 @@ public class TheBlueNormalAutonomus extends LinearOpMode {
 
             }
 
-            Translatare(105, 10, 0.3);
+            //Translatare(105, 20, 0.3);
+            Translatare(10, -60, 0.3);
 
             arm.setTargetPosition(-100);//-321; -400
             arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -700,9 +702,9 @@ public class TheBlueNormalAutonomus extends LinearOpMode {
             //Rotire(4, 0.3);
 
             //shoot 3 - 1
-            shuter.setVelocity(-2510);
+            shuter.setVelocity(-2425);
             lastTime = System.currentTimeMillis();
-            while(lastTime + 450 > System.currentTimeMillis()){
+            while(lastTime + 500 > System.currentTimeMillis()){
 
             }
             loader.setPosition(Lpos);
@@ -782,13 +784,13 @@ public class TheBlueNormalAutonomus extends LinearOpMode {
             shuter.setVelocity(-2180);
             //Cnoc inele
             //intake.setPower(-1.0);
-            Translatare(-28, 0, 0.3);
+            Translatare(-43, 0, 0.3);
             Rotire(-5, 0.3);
             lastTime = System.currentTimeMillis();
             while(lastTime + 100 > System.currentTimeMillis()) {
             }
 
-            Translatare(0, 33, 1.0);
+            Translatare(0, 38, 1.0);
             lastTime = System.currentTimeMillis();
             while(lastTime + 200 > System.currentTimeMillis()) {
             }
@@ -803,7 +805,7 @@ public class TheBlueNormalAutonomus extends LinearOpMode {
 
 
 
-
+            /*
             Translatare(0, -70, 0.35);// X = -18
             lastTime = System.currentTimeMillis();
             while(lastTime + 50 > System.currentTimeMillis()){
@@ -811,19 +813,45 @@ public class TheBlueNormalAutonomus extends LinearOpMode {
             }
             //sleep(50);
 
-            //MAI IN FATA SI SA REDUCI TOATE VITEZELE
 
 
             Translatare(10, 40, 0.35);// X = 40
             lastTime = System.currentTimeMillis();
             while(lastTime + 50 > System.currentTimeMillis()){
 
-            } //sleep
 
-            //Rotire(10, 0.3);
-            //sleep(100);
+            }
+            */
 
-            Rotire(15, 0.3);
+            Rotire(5, 0.3);
+            shuter.setVelocity(-2215);
+            lastTime = System.currentTimeMillis();
+            while(lastTime + 10 > System.currentTimeMillis()){
+
+            }
+            loader.setPosition(Lpos);
+            lastTime = System.currentTimeMillis();
+            while(lastTime + 400 > System.currentTimeMillis()){
+            }
+            loader.setPosition(0.2);
+            shuter.setVelocity(-2205);
+            lastTime = System.currentTimeMillis();
+            while(lastTime + 400 > System.currentTimeMillis()){
+            }
+            loader.setPosition(Lpos);
+            lastTime = System.currentTimeMillis();
+            while(lastTime + 400 > System.currentTimeMillis()){
+            }
+            loader.setPosition(0.2);
+            shuter.setVelocity(-2205);
+            lastTime = System.currentTimeMillis();
+            while(lastTime + 400 > System.currentTimeMillis()){
+            }
+
+            Translatare(0, 10, 0.3);
+
+
+            //Rotire(5, 0.3);
 
             //grabber_right.setPosition(0.2);
             //grabber_left.setPosition(0.8);
@@ -846,7 +874,7 @@ public class TheBlueNormalAutonomus extends LinearOpMode {
 
             }
 
-            Translatare(0, 48, 0.3);
+            Translatare(0, 10, 0.3);//Y=48
             lastTime = System.currentTimeMillis();
             while(lastTime + 50 > System.currentTimeMillis()){
 
@@ -886,65 +914,7 @@ public class TheBlueNormalAutonomus extends LinearOpMode {
 
             }
 
-            /*
-            grabber_right.setPosition(0.4);
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 100 > System.currentTimeMillis()){
-
-            }
-            grabber_right.setPosition(0.9);
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 500 > System.currentTimeMillis()){
-
-            }
-            grabber_right.setPosition(0.2);
-
-            grabber_left.setPosition(0.6);
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 100 > System.currentTimeMillis()){
-
-            }
-            grabber_left.setPosition(0.1);
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 500 > System.currentTimeMillis()){
-
-            }
-            grabber_left.setPosition(0.8);
-
-            grabber_right.setPosition(0.4);
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 100 > System.currentTimeMillis()){
-
-            }
-            grabber_right.setPosition(0.9);
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 500 > System.currentTimeMillis()){
-
-            }
-            grabber_right.setPosition(0.2);
-
-            grabber_left.setPosition(0.6);
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 100 > System.currentTimeMillis()){
-
-            }
-            grabber_left.setPosition(0.1);
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 500 > System.currentTimeMillis()){
-
-            }
-            grabber_left.setPosition(0.8);
-
-            lastTime = System.currentTimeMillis();
-            while(lastTime + 500 > System.currentTimeMillis()){
-
-            }
-
-            //grabber_right.setPosition(0.2);
-            //grabber_left.setPosition(0.8);
-            */
-
-            //Rotire(5, 0.3);
+            Rotire(5, 0.3);
 
             shuter.setVelocity(-2110);
             lastTime = System.currentTimeMillis();
@@ -1001,7 +971,7 @@ public class TheBlueNormalAutonomus extends LinearOpMode {
             //grabber_right.setPosition(0.9);
 
 
-            Translatare(-40, 155, 0.5);
+            Translatare(-50, 165, 0.5);
             lastTime = System.currentTimeMillis();
             while(lastTime + 50 > System.currentTimeMillis()){
 
@@ -1045,8 +1015,9 @@ public class TheBlueNormalAutonomus extends LinearOpMode {
          arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
          sleep(50);
          */
-            Translatare(80, 0, 0.4);
-            Translatare(0, -115, 0.4);
+            //Translatare(0, 0, 0.4);
+            Translatare(80, 0, 0.5);
+            Translatare(0, -115, 0.6);
             lastTime = System.currentTimeMillis();
             while(lastTime + 50 > System.currentTimeMillis()){
 

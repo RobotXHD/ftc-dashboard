@@ -368,7 +368,7 @@ public class TheSimpleRedAutonomus extends LinearOpMode {
             intake.setPower(0);
 
             //pozitionare livrare 1
-            Translatare(-15,85, 0.3);
+            Translatare(-5,85, 0.3);
             //sleep(100);
             Rotire(45, 0.3);
             Translatare(0, 10, 0.3);
@@ -422,7 +422,7 @@ public class TheSimpleRedAutonomus extends LinearOpMode {
 
             }
 
-            Rotire(25, 0.3);
+            Rotire(22, 0.3);
             lastTime = System.currentTimeMillis();
             while(lastTime + 100 > System.currentTimeMillis()){
             }
@@ -494,7 +494,7 @@ public class TheSimpleRedAutonomus extends LinearOpMode {
             intake.setPower(0);
 
             //pozitionare livrare 1
-            Translatare(0, 140, 0.3);
+            Translatare(0, 110, 0.3);
             //sleep(100);
 
             //Translatare(-23, 0, 0.3);
@@ -526,7 +526,7 @@ public class TheSimpleRedAutonomus extends LinearOpMode {
             }
             //Rotire(5, 0.3);
 
-            Translatare(-5, -90, 0.3);
+            Translatare(-5, -60, 0.3);
             //Translatare(40, 0, 0.3);
             /*
             arm.setTargetPosition(-100);//-321; -400

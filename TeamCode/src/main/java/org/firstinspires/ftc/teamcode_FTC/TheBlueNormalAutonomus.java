@@ -24,7 +24,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
 import java.util.List;
 
-@Autonomous(name="TheBlueNormalAutonomus")
+@Autonomous
 //@Disabled
 public class TheBlueNormalAutonomus extends LinearOpMode {
 

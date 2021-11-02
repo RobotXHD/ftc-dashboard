@@ -23,8 +23,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp
-@Disabled
-public class Test extends LinearOpMode {
+public class Test2 extends LinearOpMode {
     //private Gyroscope imu;
     private DcMotor motorBL;
     private DcMotor motorBR;

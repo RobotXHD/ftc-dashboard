@@ -19,6 +19,8 @@ public class Nou_Program_pentrucada extends OpMode {
         motordr = hardwareMap.get(DcMotorEx.class, "motorDR");
         motorst = hardwareMap.get(DcMotorEx.class, "motorST");
         motors = hardwareMap.get(DcMotorEx.class, "motorS");
+
+
     }
 
     @Override
